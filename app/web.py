@@ -1,5 +1,5 @@
 from flask import Flask, render_template_string
-from app.models.database import KickDB
+from models.database import KickDB
 
 app = Flask(__name__)
 
