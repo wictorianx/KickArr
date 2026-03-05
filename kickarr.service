@@ -1,0 +1,26 @@
+[Unit]
+Description=KickArr VOD Archiver Service
+After=network.target
+
+[Service]
+# Replace 'user' with your actual system username 
+User=user
+Group=user
+
+# The absolute path to your project folder
+WorkingDirectory=/home/user/Desktop/codelair/kickarr
+
+# Path to your python executable and the main script
+# If you use a virtual environment, point this to /path/to/venv/bin/python3
+ExecStart=/usr/bin/python3 main.py
+
+# Restart the service if it crashes
+Restart=always
+RestartSec=10
+
+# Standard output/error logging
+StandardOutput=inherit
+StandardError=inherit
+
+[Install]
+WantedBy=multi-user.target
