@@ -2,7 +2,7 @@ import subprocess
 import os
 import logging
 from typing import Dict, Any
-from app.models.database import KickDB
+from models.database import KickDB
 
 logger = logging.getLogger(__name__)
 
