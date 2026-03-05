@@ -1,0 +1,15 @@
+# KickArr Global Configuration
+streamers:
+  - jahrein
+  - nymn
+
+archive:
+  download_path: "VODs"
+  check_interval_mins: 60
+  # Set to 1 to prevent Pi 3 from crashing
+  concurrent_downloads: 1
+
+quality:
+  # 1080 is fine, but 720 saves space and Pi CPU
+  max_height: 1080
+  save_chat_as_subtitles: true

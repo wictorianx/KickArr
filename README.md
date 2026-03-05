@@ -1,31 +1,30 @@
 # 🟢 KickArr
 
-**KickArr is an automated tool to track and archive streamer VODs from Kick.com.**
+**KickArr** is an automated tool to track and archive streamer VODs from Kick.com.
 
-KickArr is a lightweight background service designed to monitor your favorite streamers and automatically archive their VODs. It is optimized for Raspberry Pi and Home Lab users who want a "set it and forget it" solution to preserve content before it's deleted.
-
----
+Designed as a lightweight background service, it monitors your favorite streamers and automatically archives their VODs. It is optimized for **Raspberry Pi** and **Home Lab** users who want a "set it and forget it" solution to preserve content.
 
 ## ✨ Features
 
-- **Automated Sync:** Checks for new VODs every hour (configurable).
-- **Persistent Archive:** Uses SQLite to ensure VODs are only downloaded once, even if the file is moved.
-- **Pi-Ready:** Resource-constrained design with single-instance downloading to prevent CPU/RAM spikes on low-end hardware.
-- **State Management:** Robustly tracks `pending`, `downloading`, and `completed` tasks.
-
----
+*   **Automated Sync**: Checks for new VODs periodically (default: every hour).
+*   **Web Dashboard**: Includes a lightweight web interface to monitor download status and history.
+*   **Persistent Archive**: Uses SQLite to ensure VODs are tracked and only downloaded once.
+*   **Pi-Ready**: Resource-constrained design with single-instance downloading to prevent CPU/RAM spikes.
+*   **State Management**: Robustly tracks pending, downloading, completed, and failed tasks.
 
 ## 🚀 Installation
 
 ### 1. Prerequisites
 
-Ensure you have `ffmpeg` and `python3` installed on your system.
+Ensure you have `ffmpeg`, `python3`, and `yt-dlp` installed on your system.
 
+**Arch Linux**
 ```bash
-# Arch Linux
 sudo pacman -S ffmpeg python yt-dlp
+```
 
-# Debian/Ubuntu (Raspberry Pi OS)
+**Debian/Ubuntu (Raspberry Pi OS)**
+```bash
 sudo apt update && sudo apt install ffmpeg python3 python3-pip yt-dlp
 ```
 
@@ -39,47 +38,50 @@ pip install -r requirements.txt
 
 ### 3. Configuration
 
-KickArr uses a YAML configuration. Copy the example and add your streamers:
+KickArr uses a YAML configuration file. Create one based on your needs:
 
 ```bash
-cp config/config.example.yaml config/config.yaml
+# Create the config directory if it doesn't exist
+mkdir -p config
+# Create/Edit config.yaml
 nano config/config.yaml
 ```
 
-> **Note:** Ensure `config/config.yaml` is in your `.gitignore` to protect your local settings.
+Example `config/config.yaml`:
+```yaml
+streamers:
+  - jahrein
+  - nymn
 
----
+archive:
+  download_path: "VODs"
+  check_interval_mins: 60
+```
 
 ## 🛠️ Usage
 
-To start the service manually:
+KickArr comes with a helper script to start both the background scheduler and the web dashboard.
 
-```bash
-python3 main.py
-```
+1.  Make the script executable:
+    ```bash
+    chmod +x run.sh
+    ```
 
----
+2.  Start the service:
+    ```bash
+    ./run.sh
+    ```
+
+3.  **Access the Dashboard**: Open your browser and navigate to `http://localhost:5000`.
 
 ## 📦 Systemd Setup (Linux)
 
-To run KickArr as a background service that starts automatically on boot:
+To run KickArr as a background service that starts automatically on boot, point your systemd service file to the `run.sh` script.
 
-1. Edit `kickarr.service` and update the `WorkingDirectory` and `ExecStart` paths to match your local installation.
-
-2. Copy the file to the system directory:
-
-```bash
-sudo cp kickarr.service /etc/systemd/system/
-```
-
-3. Enable and start the service:
-
-```bash
-sudo systemctl daemon-reload
-sudo systemctl enable --now kickarr
-```
-
----
+1.  Update `ExecStart` in your service file:
+    ```ini
+    ExecStart=/path/to/kickarr/run.sh
+    ```
 
 ## 🤝 Contributing
 

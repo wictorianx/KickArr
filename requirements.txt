@@ -1,0 +1,7 @@
+
+apscheduler==3.10.1
+pyyaml==6.0.1
+yt-dlp>=2024.02.10
+kickapi==0.3.7
+flask==3.0.0
+# Optional: colorama (for pretty logs)
